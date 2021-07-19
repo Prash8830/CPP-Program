@@ -42,9 +42,10 @@ int main()
         //using power of spell 
         long mprice = 0;
         int i=0;
-        while(mark[i++])
+        while(mark[i])
         {
             mprice = max(mprice,apples[i].second);
+            i++;
         }
         mprice += m; //add prev rem money
         if(apples[i].second>=mprice)
