@@ -1,3 +1,5 @@
+// HackerEarth Question   https://www.hackerearth.com/challenges/competitive/july-circuits-21/algorithm/sengij-and-the-apples-c4b983b8/
+
 #include<bits/stdc++.h>
 using namespace std;
  
