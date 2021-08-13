@@ -1,16 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+ 
 #define fio ios_base::sync_with_stdio(false);cin.tie(NULL);
-
+ 
 int main()
 {
     fio;
-    int i=0;
-    while(i++)
+    
+    int t;
+    cin>>t;
+
+    while(t--)
     {
-       cout<<i<<" ";
+        int n;
+        string s;
+        cin>>n>>s;
+        cout<<s[0]<<"\n";
     }
-    cout<<"sdmn";
+    
     return 0;
 }
