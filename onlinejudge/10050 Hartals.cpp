@@ -17,21 +17,18 @@ int main() {
 	        for(int j=0; j<n; j++)
 	        {
 	            if((j+1)%freq[i]==0)table[i][j]=1;
-	            cout<<table[i][j];
 	        }
-	        cout<<endl;
 	    }
 	    int w=0;
 	    for(int j=0; j<n; j++)
 	    {
-	        if((j+1)%6!=0 && (j+1)%7!=0)
+	        if((j+1)%7!=6 && (j+1)%7!=0)
 	        {
 	            for(int i=0; i<p; i++)
 	            {
 	                if(table[i][j]==1)
 	                {
 	                    w++;
-	                    cout<<j<<endl;
 	                    break;
 	                }
 	            }
