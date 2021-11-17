@@ -1,0 +1,220 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Nov 15 13:14:19 2021
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> conn
+Enter user-name: system
+Enter password:
+Connected.
+SQL> create table Student(
+        stud_id number(6) primary key,
+        stud_name varchar(15),
+  2     stud_dept varcha(15),
+  3     stud_city varchar(15),
+  4     stud_permarks number(6,2));
+   stud_dept varcha(15),
+                   *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table Student(
+        stud_id number(6) primary key,
+        stud_name varchar(15),
+  2     stud_dept varchar(15),
+  3     stud_city varchar(15),
+  4     stud_permarks number(6,2));
+
+Table created.
+
+SQL> insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_city',
+&stud_permarks);
+Enter value for stud_id: 1
+Enter value for stud_name: Prashant
+Enter value for stud_dept: Computer \
+Enter value for stud_city: Nandurbar
+Enter value for stud_permarks: 90.99
+old   1: insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_ci
+ty',&stud_permarks)
+new   1: insert into Student values(1,'Prashant','Computer \','Nandurbar',90.99)
+
+
+1 row created.
+
+SQL> insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_city',
+&stud_permarks);
+Enter value for stud_id: 2
+Enter value for stud_name: Aniket
+Enter value for stud_dept: Mechanical
+Enter value for stud_city: Pachora
+Enter value for stud_permarks: 87.20
+old   1: insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_ci
+ty',&stud_permarks)
+new   1: insert into Student values(2,'Aniket','Mechanical','Pachora',87.20)
+
+1 row created.
+
+SQL> /
+Enter value for stud_id: 3
+Enter value for stud_name: Jadeja
+Enter value for stud_dept: E&tc
+Enter value for stud_city: Jalgoan
+Enter value for stud_permarks: 54.21
+old   1: insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_ci
+ty',&stud_permarks)
+new   1: insert into Student values(3,'Jadeja','E&tc','Jalgoan',54.21)
+
+1 row created.
+
+SQL> /
+Enter value for stud_id: 4
+Enter value for stud_name: Rahul
+Enter value for stud_dept: Computer
+Enter value for stud_city: Kannad
+Enter value for stud_permarks: 56
+old   1: insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_ci
+ty',&stud_permarks)
+new   1: insert into Student values(4,'Rahul','Computer ','Kannad',56)
+
+1 row created.
+
+SQL> /
+Enter value for stud_id: 5
+Enter value for stud_name: Nukul
+Enter value for stud_dept: Civil
+Enter value for stud_city: Nashik
+Enter value for stud_permarks: 84.24
+old   1: insert into Student values(&stud_id,'&stud_name','&stud_dept','&stud_ci
+ty',&stud_permarks)
+new   1: insert into Student values(5,'Nukul','Civil','Nashik',84.24)
+
+1 row created.
+
+SQL> select * from Student
+  2  ;
+
+   STUD_ID STUD_NAME       STUD_DEPT       STUD_CITY       STUD_PERMARKS
+---------- --------------- --------------- --------------- -------------
+         1 Prashant        Computer \      Nandurbar               90.99
+         2 Aniket          Mechanical      Pachora                  87.2
+         3 Jadeja          E&tc            Jalgoan                 54.21
+         4 Rahul           Computer        Kannad                     56
+         5 Nukul           Civil           Nashik                  84.24
+
+SQL> select min(stud_permarks) from  Student;
+
+MIN(STUD_PERMARKS)
+------------------
+             54.21
+
+SQL> select max(stud_permarks) from  Student;
+
+MAX(STUD_PERMARKS)
+------------------
+             90.99
+
+SQL> select avg(stud_permarks) from  Student;
+
+AVG(STUD_PERMARKS)
+------------------
+            74.528
+
+SQL> select sum(stud_permarks) from  Student;
+
+SUM(STUD_PERMARKS)
+------------------
+            372.64
+
+SQL> select count(stud_permarks) from  Student;
+
+COUNT(STUD_PERMARKS)
+--------------------
+                   5
+
+SQL> select count(stud_name), stud_dept from Student group by stud_dept;
+
+COUNT(STUD_NAME) STUD_DEPT
+---------------- ---------------
+               1 Computer \
+               1 Mechanical
+               1 Civil
+               1 Computer
+               1 E&tc
+
+SQL> update Student set stud_dept='Computer' where stud_id=1
+  2  ;
+
+1 row updated.
+
+SQL> select count(stud_name), stud_dept from Student group by stud_dept;
+
+COUNT(STUD_NAME) STUD_DEPT
+---------------- ---------------
+               1 Mechanical
+               1 Civil
+               1 Computer
+               1 E&tc
+               1 Computer
+
+SQL> update Student set stud_dept='Computer' where stud_id=4;
+
+1 row updated.
+
+SQL> select count(stud_name), stud_dept from Student group by stud_dept;
+
+COUNT(STUD_NAME) STUD_DEPT
+---------------- ---------------
+               1 Mechanical
+               1 Civil
+               1 E&tc
+               2 Computer
+
+SQL> select * from Student;
+
+   STUD_ID STUD_NAME       STUD_DEPT       STUD_CITY       STUD_PERMARKS
+---------- --------------- --------------- --------------- -------------
+         1 Prashant        Computer        Nandurbar               90.99
+         2 Aniket          Mechanical      Pachora                  87.2
+         3 Jadeja          E&tc            Jalgoan                 54.21
+         4 Rahul           Computer        Kannad                     56
+         5 Nukul           Civil           Nashik                  84.24
+
+SQL> select count(stud_name), stud_dept , max(stud_permarks) from Student group
+by stud_dept;
+
+COUNT(STUD_NAME) STUD_DEPT       MAX(STUD_PERMARKS)
+---------------- --------------- ------------------
+               1 Mechanical                    87.2
+               1 Civil                        84.24
+               1 E&tc                         54.21
+               2 Computer                     90.99
+
+SQL> select count(stud_name), stud_dept , max(stud_permarks) from Student group
+by stud_name;
+select count(stud_name), stud_dept , max(stud_permarks) from Student group by st
+ud_name
+                         *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select count(stud_name), stud_dept , max(stud_permarks) from Student group
+by stud_dept;
+
+COUNT(STUD_NAME) STUD_DEPT       MAX(STUD_PERMARKS)
+---------------- --------------- ------------------
+               1 Mechanical                    87.2
+               1 Civil                        84.24
+               1 E&tc                         54.21
+               2 Computer                     90.99
+
+SQL> select count(stud_name), stud_dept , stud_permarks from Student where stud_
+permarks>70 and stud_permarks<=90  group by stud_dept,stud_permarks;
+
+COUNT(STUD_NAME) STUD_DEPT       STUD_PERMARKS
+---------------- --------------- -------------
+               1 Civil                   84.24
+               1 Mechanical               87.2
+
+SQL>
