@@ -1,141 +1,150 @@
 #include <bits/stdc++.h>
-using namespace std;
 
-vector<string> divide(string s)
-{
-    vector<string> a;
-    string k;
-    for (int i = 0; i < s.size(); i++)
-    {
-        if (!isspace(s[i]))
-            k = k + s[i];
-        else
-        {
-            a.push_back(k);
-            k = "";
-        }
-    }
-    if (k.size() != 0)
-        a.push_back(k);
-    return a;
+#define MAX 250
+#define OFFSET 1
+#define DOS_NAME 12
+
+/* global image bounds */
+int n, m;
+
+/* fills a rectangle with the specified color */
+int fillRectangle(int m_ini, int n_ini, int m_end, int n_end, char color, char pTable[][MAX+OFFSET]) {
+	int i, j;
+	for (i = n_ini; i <= n_end; i++) {
+		for (j = m_ini; j <= m_end; j++) {
+			pTable[i][j] = color;
+		}
+	}
+	return 0;
 }
 
-int main()
-{
+/* fills a region R with the specified color */
+int fillRegion(int x, int y, char oldColor, char newColor, char pTable[][MAX+OFFSET]) {	
+	/* (x,y) is in region R */
+	pTable[y][x] = newColor;
+	
+	/* recursively check all 4 directions for neighbours of (x,y) with same color */
+	if ((pTable[y][x-1] == oldColor) && (x > OFFSET)) {         
+		fillRegion(x-1, y, oldColor, newColor, pTable);
+	}
+	if ((pTable[y][x+1] == oldColor) && (x < m)) {       
+		fillRegion(x+1, y, oldColor, newColor, pTable);
+	}
+	if ((pTable[y-1][x] == oldColor) && (y > OFFSET)) {        
+		fillRegion(x, y-1, oldColor, newColor, pTable);
+	}
+	if ((pTable[y+1][x] == oldColor) && (y < n)) {        
+		fillRegion(x, y+1, oldColor, newColor, pTable);
+	}
+	return 0;
+}
 
-    string command, c;
-    vector<vector<string>> curr;
-    while (1)
-    {
-        getline(cin, command);
-        vector<string> ans;
-        ans = divide(command);
+/* outputs the image */
+int printImage(int m, int n, char pTable[][MAX+OFFSET]) {
+	int i, j;	
+	for (i = OFFSET; i < n+OFFSET; i++) {
+		for (j = OFFSET; j < m+OFFSET; j++ ) {
+			printf("%c", pTable[i][j]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
 
-        if (ans[0] == "I")
-        {
-            int m, n;
-            m = stoi(ans[1]);
-            n = stoi(ans[2]);
-            vector<vector<string>> cur(n, vector<string>(m, "O"));
-            curr = cur;
-        }
-        else if (ans[0] == "C")
-        {
-            for (int i = 0; i < curr.size(); i++)
-            {
-                for (int j = 0; j < curr[0].size(); j++)
-                {
-                    curr[i][j] = "O";
-                }
-            }
-        }
-        else if (ans[0] == "L")
-        {
-            int x, y;
-            x = stoi(ans[1]);
-            y = stoi(ans[2]);
-            c = ans[3];
-            curr[y - 1][x - 1] = c; //because of 0 based indexing
-        }
-        else if (ans[0] == "V")
-        {
-            int x, y1, y2;
-            x = stoi(ans[1]);
-            y1 = stoi(ans[2]);
-            y2 = stoi(ans[3]);
-            c = ans[4];
-            for (int i = y1 - 1; i <= y2 - 1; i++)
-                curr[i][x - 1] = c;
-        }
-        else if (ans[0] == "H")
-        {
-            int x1, x2, y;
-            x1 = stoi(ans[1]);
-            x2 = stoi(ans[2]);
-            y = stoi(ans[3]);
-            c = ans[4];
-            for (int i = x1 - 1; i <= x2 - 1; i++)
-                curr[y - 1][i] = c;
-        }
-        else if (ans[0] == "K")
-        {
-            int x1, y1, x2, y2;
-            x1 = stoi(ans[1]);
-            y1 = stoi(ans[2]);
-            x2 = stoi(ans[3]);
-            y2 = stoi(ans[4]);
-            c = ans[5];
-            for (int i = y1 - 1; i <= y2 - 1; i++)
-            {
-                for (int j = x1 - 1; j <= x2 - 1; j++)
-                {
-                    curr[i][j] = c;
-                }
-            }
-        }
-        else if (ans[0] == "F")
-        {
-            int x, y;
-            x = stoi(ans[1]);
-            y = stoi(ans[2]);
-            c = ans[3];
-            string p = curr[y - 1][x - 1];
-            vector<vector<string>> kp;
-            kp = curr;
-            for (int i = 0; i < curr.size(); i++)
-            {
-                for (int j = 0; j < curr[0].size(); j++)
-                {
-                    if (curr[i][j] == p)
-                        curr[i][j] = c;
-                    if (i != 0 && kp[i - 1][j] == p)
-                        curr[i][j] = c;
-                    if (i != curr.size() - 1 && kp[i + 1][j] == p)
-                        curr[i][j] = c;
-                    if (j != 0 && kp[i][j - 1] == p)
-                        curr[i][j] = c;
-                    if (j != curr[0].size() - 1 && kp[i][j + 1] == p)
-                        curr[i][j] = c;
-                }
-            }
-        }
-        else if (ans[0] == "S")
-        {
-            string name;
-            name = ans[1];
-            cout << name << "\n";
-            for (int i = 0; i < curr.size(); i++)
-            {
-                for (int j = 0; j < curr[0].size(); j++)
-                {
-                    cout << curr[i][j];
-                }
-                cout << "\n";
-            }
-        }
-        else if (ans[0] == "X")
-            break;
-    }
+/* main */
+int main (int argc, const char * argv[]) {
+	/* the image */
+	char image[MAX+OFFSET][MAX+OFFSET];
 
-    return 0;
+	/* editor command */
+	char command;
+	
+	/* coords */
+	int x1, x2, y1, y2, tmp;
+	
+	/* colors */
+	char color, oldColor;
+	
+	/* filename */
+	char filename[DOS_NAME+1];
+			
+	while(scanf("%c", &command) != EOF) {		
+		/* X, terminates the session */
+		if (command == 'X') {
+			return 0;
+		}		
+		switch (command) {
+			/* create image */
+			case 'I' :
+				scanf("%d %d", &m, &n);
+				fillRectangle(1, 1, m, n, 'O', image);
+				break;
+			
+			/* clear image */
+			case 'C' :
+				fillRectangle(1, 1, m, n, 'O', image);
+				break;
+			
+			/* colors a pixel */
+			case 'L' :
+				scanf("%d %d %c", &x1, &y1, &color);
+				image[y1][x1] = color;
+				break;
+			
+			/* draw vertical segment */
+			case 'V' :
+				scanf("%d %d %d %c", &x1, &y1, &y2, &color);
+				if (y2 >= y1)
+					fillRectangle(x1, y1, x1, y2, color, image);
+				else
+					fillRectangle(x1, y2, x1, y1, color, image);
+				break;
+			
+			/* draw horizontal segment */
+			case 'H' : 
+				scanf("%d %d %d %c", &x1, &x2, &y1, &color);
+				if (x2 >= x1)
+					fillRectangle(x1, y1, x2, y1, color, image);
+				else
+					fillRectangle(x2, y1, x1, y1, color, image);
+				break;
+			
+			/* draw rectangle */
+			case 'K' : 
+				scanf("%d %d %d %d %c", &x1, &y1, &x2, &y2, &color);
+				if (x1 >= x2) {
+					tmp = x1;
+					x1 = x2;
+					x2 = tmp;
+				}
+				if (y1 >= y2) {
+					tmp = y1;
+					y1 = y2;
+					y2 = tmp;
+				}
+				fillRectangle(x1, y1, x2, y2, color, image);
+				break;
+			
+			/* fill */
+			case 'F' :
+				scanf("%d %d %c", &x1, &y1, &color);
+				oldColor = image[y1][x1];
+				if (oldColor != color) {
+					fillRegion(x1, y1, oldColor, color, image);
+				}
+				break;
+
+			/* fill */
+			case 'S' :
+				scanf("%s", &filename);
+				printf("%s\n", filename);
+				printImage(m, n, image);
+				break;			
+		
+			default: 
+				break;
+		}		
+	}
+	
+	return 0;
 }
