@@ -1,12 +1,12 @@
 // verdict accepted : ✔️
-// link : https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=36
+// LINK : https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=36
 
 #include<bits/stdc++.h>
 using namespace std;
- 
+
 #define fio ios_base::sync_with_stdio(false);cin.tie(NULL);
 
-long long countC(int n)
+long long countC(int n) //to count cycle
 {
     long long c = 1;
     while(n!=1)
