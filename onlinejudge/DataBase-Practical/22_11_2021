@@ -1,0 +1,300 @@
+Enter value for brach_name: dhule\
+Enter value for brach_city: dhule
+Enter value for asset: 50000
+old   1: insert into branh values('&brach_name','&brach_city',&asset)
+new   1: insert into branh values('dhule\','dhule',50000)
+
+1 row created.
+
+SQL> /
+Enter value for brach_name: shirpur
+Enter value for brach_city: shirpur
+Enter value for asset: 42054
+old   1: insert into branh values('&brach_name','&brach_city',&asset)
+new   1: insert into branh values('shirpur','shirpur',42054)
+
+1 row created.
+
+SQL> /
+Enter value for brach_name: nandurbar
+Enter value for brach_city: nandurbar
+Enter value for asset: 5456444
+old   1: insert into branh values('&brach_name','&brach_city',&asset)
+new   1: insert into branh values('nandurbar','nandurbar',5456444)
+
+1 row created.
+
+SQL> insert into customer values('&customer_name','&customer_city','&customer_steet');
+Enter value for customer_name: Ramesh
+Enter value for customer_city: shirpur
+Enter value for customer_steet: nimazari
+old   1: insert into customer values('&customer_name','&customer_city','&customer_steet')
+new   1: insert into customer values('Ramesh','shirpur','nimazari')
+
+1 row created.
+
+SQL> /
+Enter value for customer_name: karan
+Enter value for customer_city: dhule
+Enter value for customer_steet: gkd
+old   1: insert into customer values('&customer_name','&customer_city','&customer_steet')
+new   1: insert into customer values('karan','dhule','gkd')
+
+1 row created.
+
+SQL> /
+Enter value for customer_name: prashant
+Enter value for customer_city: nandurbar
+Enter value for customer_steet: fkggf
+old   1: insert into customer values('&customer_name','&customer_city','&customer_steet')
+new   1: insert into customer values('prashant','nandurbar','fkggf')
+
+1 row created.
+
+SQL> insert into account values('&acc_no,'&brach_name',&balance);
+Enter value for acc_no: 8830
+Enter value for brach_name: dhule
+Enter value for balance: 2000
+old   1: insert into account values('&acc_no,'&brach_name',&balance)
+new   1: insert into account values('8830,'dhule',2000)
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into account values(&acc_no,'&brach_name',&balance);
+Enter value for acc_no: 8830
+Enter value for brach_name: shirpur
+Enter value for balance: 2000
+old   1: insert into account values(&acc_no,'&brach_name',&balance)
+new   1: insert into account values(8830,'shirpur',2000)
+
+1 row created.
+
+SQL> /
+Enter value for acc_no: 5425
+Enter value for brach_name: dhule
+Enter value for balance: 6000
+old   1: insert into account values(&acc_no,'&brach_name',&balance)
+new   1: insert into account values(5425,'dhule',6000)
+insert into account values(5425,'dhule',6000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.FDBRACHNAME) violated - parent key not
+found
+
+
+SQL> /
+Enter value for acc_no: 5424
+Enter value for brach_name: dhule/
+Enter value for balance: 6000
+old   1: insert into account values(&acc_no,'&brach_name',&balance)
+new   1: insert into account values(5424,'dhule/',6000)
+insert into account values(5424,'dhule/',6000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.FDBRACHNAME) violated - parent key not
+found
+
+
+SQL> /
+Enter value for acc_no: 3545
+Enter value for brach_name: nandurbar
+Enter value for balance: 6000
+old   1: insert into account values(&acc_no,'&brach_name',&balance)
+new   1: insert into account values(3545,'nandurbar',6000)
+
+1 row created.
+
+SQL> /
+Enter value for acc_no: 984598
+Enter value for brach_name: shirpur
+Enter value for balance: 1500
+old   1: insert into account values(&acc_no,'&brach_name',&balance)
+new   1: insert into account values(984598,'shirpur',1500)
+
+1 row created.
+
+SQL> /
+Enter value for acc_no: 5094
+Enter value for brach_name: nandurbar
+Enter value for balance: 4399
+old   1: insert into account values(&acc_no,'&brach_name',&balance)
+new   1: insert into account values(5094,'nandurbar',4399)
+
+1 row created.
+
+SQL> insert into loan values(&loan_no,'&brach_name',&amount);
+Enter value for loan_no: 43984732
+Enter value for brach_name: shipur
+Enter value for amount: 5000
+old   1: insert into loan values(&loan_no,'&brach_name',&amount)
+new   1: insert into loan values(43984732,'shipur',5000)
+insert into loan values(43984732,'shipur',5000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.FDABRACHNAME) violated - parent key not
+found
+
+
+SQL> /
+Enter value for loan_no: 849043
+Enter value for brach_name: shirpur
+Enter value for amount: 9433
+old   1: insert into loan values(&loan_no,'&brach_name',&amount)
+new   1: insert into loan values(849043,'shirpur',9433)
+
+1 row created.
+
+SQL> /
+Enter value for loan_no: 038328
+Enter value for brach_name: nandurbar
+Enter value for amount: 3444
+old   1: insert into loan values(&loan_no,'&brach_name',&amount)
+new   1: insert into loan values(038328,'nandurbar',3444)
+
+1 row created.
+
+SQL> /
+Enter value for loan_no: 4050
+Enter value for brach_name: shirpur
+Enter value for amount: 388
+old   1: insert into loan values(&loan_no,'&brach_name',&amount)
+new   1: insert into loan values(4050,'shirpur',388)
+
+1 row created.
+
+SQL> /
+Enter value for loan_no: 984
+Enter value for brach_name: shirpur
+Enter value for amount: 3922
+old   1: insert into loan values(&loan_no,'&brach_name',&amount)
+new   1: insert into loan values(984,'shirpur',3922)
+
+1 row created.
+
+SQL> insert into depositor values('&customer_name',&acc_no);
+Enter value for customer_name: prashant
+Enter value for acc_no: 5094
+old   1: insert into depositor values('&customer_name',&acc_no)
+new   1: insert into depositor values('prashant',5094)
+
+1 row created.
+
+SQL> /
+Enter value for customer_name: Ramesh
+Enter value for acc_no: 984598
+old   1: insert into depositor values('&customer_name',&acc_no)
+new   1: insert into depositor values('Ramesh',984598)
+
+1 row created.
+
+SQL> /
+Enter value for customer_name: prashant
+Enter value for acc_no: 5094
+old   1: insert into depositor values('&customer_name',&acc_no)
+new   1: insert into depositor values('prashant',5094)
+
+1 row created.
+
+SQL> insert into borrower values('&customer_name',&loan_no);
+Enter value for customer_name: prashant
+Enter value for loan_no: 038320
+old   1: insert into borrower values('&customer_name',&loan_no)
+new   1: insert into borrower values('prashant',038320)
+insert into borrower values('prashant',038320)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.FDANLONNAME) violated - parent key not
+found
+
+
+SQL> /
+Enter value for customer_name: prashant
+Enter value for loan_no: 038328
+old   1: insert into borrower values('&customer_name',&loan_no)
+new   1: insert into borrower values('prashant',038328)
+
+1 row created.
+
+SQL> /
+Enter value for customer_name: Ramesh
+Enter value for loan_no: 4050
+old   1: insert into borrower values('&customer_name',&loan_no)
+new   1: insert into borrower values('Ramesh',4050)
+
+1 row created.
+
+SQL> select acc_no from account where balance<5000;
+
+    ACC_NO
+----------
+      8830
+    984598
+      5094
+
+SQL> select * from account;
+
+    ACC_NO BRACH_NAME         BALANCE
+---------- --------------- ----------
+      8830 shirpur               2000
+      3545 nandurbar             6000
+    984598 shirpur               1500
+      5094 nandurbar             4399
+
+SQL> select customer_name from customer where customer_city='shirpur';
+
+CUSTOMER_NAME
+---------------
+Ramesh
+
+SQL> select * from customer;
+
+CUSTOMER_NAME   CUSTOMER_CITY   CUSTOMER_STEET
+--------------- --------------- ---------------
+Ramesh          shirpur         nimazari
+karan           dhule           gkd
+prashant        nandurbar       fkggf
+
+SQL> select customer_name from depositor union select customer_name from borrower;
+
+CUSTOMER_NAME
+---------------
+Ramesh
+prashant
+
+SQL> select customer_name from depositor intersection select customer_name from borrower;
+select customer_name from depositor intersection select customer_name from borrower
+                                                 *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select customer_name from depositor intersection select customer_name from borrower;
+select customer_name from depositor intersection select customer_name from borrower
+                                                 *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select customer_name from depositor intersect select customer_name from borrower;
+
+CUSTOMER_NAME
+---------------
+Ramesh
+prashant
+
+SQL> select customer_name from depositor except select customer_name from borrower;
+select customer_name from depositor except select customer_name from borrower
+                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select customer_name from depositor except select customer_name from borrower;
+select customer_name from depositor except select customer_name from borrower
+                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL>
