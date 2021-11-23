@@ -2,6 +2,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool compare(pair<int,pair<int,int>>a,pair<int,pair<int,int>>b)
+{
+	if(a.second.first>b.second.first) return true;
+	else if(a.second.first==b.second.first) //no of proble solved is same
+	{
+		if(a.second.second<b.second.second) return true;
+		else if(a.second.second==b.second.second) //penalty is same
+		{
+			if(a.first<b.first) return true;
+		}
+	}
+	return false;
+}
+
 int main() {
 	
 	int t; //testcases
@@ -15,17 +29,39 @@ int main() {
 		pair<int,int>a(0,0);
 	    while(cin>>c>>q>>p>>s)
 	    {
-	        if(contestant.find(c)==contestant.end()) contestant[c]=a;  //if contestant is new
+	        if(s=="C" || s=="I" || s=="R" || s=="U" || s=="E") if(contestant.find(c)==contestant.end()) contestant[c]=a;  //if contestant is new
 			if(s=="I")
 			{
-				status[c][q]+=20; //penalty of 20min for wrong solution
+				if(status[c][q]!=-1)
+				{
+					status[c][q]+=20; //penalty of 20min for wrong solution
+				}
 			}
 			else if(s=="C")
 			{
-				contestant[c].first+=1;
-				contestant[c].second+=p+status[c][q];
+				if(status[c][q]!=-1)
+				{
+					contestant[c].first+=1; //no of problem solve ++
+					contestant[c].second+=p+status[c][q]; // penalty = time for right submission + previous penalties
+					status[c][q]=-1;
+				}
 			}
 	    }
+		vector<pair<int,pair<int,int>>>answer;
+		for(auto it : contestant)
+		{
+			pair<int,pair<int,int>>b;
+			b.first = it.first;
+			b.second = it.second;
+			answer.push_back(b);
+		}
+		sort(answer.begin(), answer.end(), compare);
+		for(int i = 0; i < answer.size(); i++) 
+		{
+			cout<<answer[i].first<<" "<<answer[i].second.first<<" "<<answer[i].second.second<<"\n";
+			//  contestant no            no of problem solved         penalty time
+		}
+		cout << "\n";
 	}
 	
 	return 0;
