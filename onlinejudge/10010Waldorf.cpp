@@ -1,58 +1,61 @@
 #include<bits/stdc++.h>
 using namespace std;
- 
-#define fio ios_base::sync_with_stdio(false);cin.tie(NULL);
- 
-bool find(vector<vector<char>>box, string w, int i, int j)
-{
-    
+
+#define FOI(i, A, B) for (i = A; i <= B; i++)
+#define FOD(i, A, B) for (i = A; i >= B; i--)
+
+string low(string S) {
+	int i, L = S.length() - 1;
+	FOI(i, 0, L)
+		S[i] = tolower(S[i]);
+	return S;
 }
 
-int main()
-{
-    fio;
-    
-    int t;
-    cin >> t;
-    while (t--)
-    {
-
-        int m,n;
-        cin >> m >> n;
-        m++;
-        n++;
-        vector<vector<char>>box(m,vector<char>(n));
-        for (int i=1; i<m; i++)
-        {
-            for (int j=1; j<n; j++)
-            {
-                cin >> box[i][j];
-            }
-        }
-        int w = 0;
-        cin >> w;
-        vector<string>word(w);
-        for(int i=0; i<w; i++)cin >> word[i];
-        for(int k=0; k<w; k++)
-        {
-            bool b=0;
-            for (int i=1; i<m; i++)
-            {
-                for (int j=1; j<n; j++)
-                {
-                    if(box[i][j]==word[k][0])
-                    {
-                        if(find(box,word[k],i,j))cout<<i<<" "<<j<<"\n";
-                        b=1;
-                        break;
-                    }
-                }
-                if(b==1)break;
-            }
-        }
-
-        if(t)cout << "\n";  
-    }
-    
-    return 0;
+int main(){
+	//freopen("testI.txt", "r", stdin);
+	//freopen("testO.txt", "w", stdout);
+	int T;
+	cin >> T;
+	while (T--)  {
+		int M, N;
+		int i, j, k;
+		cin >> M >> N;
+		string str[M];
+		FOI(i, 0, M-1) {
+			cin >> str[i];
+			str[i] = low(str[i]);
+		}
+		int Q;
+		cin >> Q;
+		while (Q--) {
+			string S;
+			cin >> S;
+			S = low(S);
+			int L = S.length();
+			bool flag = false;
+			FOI(i, 0, M-1) {
+				FOI(j, 0, N-1) {
+					string A = "", B = "", C = "", D = "", E = "", F = "", G = "", H = "";
+					FOI(k, 0, L-1) {
+						if (j + k < N)				 A += str[i][j + k];
+						if (i + k < M && j + k < N)	 B += str[i + k][j + k];
+						if (i + k < M)				 C += str[i + k][j];
+						if (i + k < M && j - k >= 0) D += str[i + k][j - k];
+						if (j - k >= 0)				 E += str[i][j - k];
+						if (i - k >= 0 && j - k >=0) F += str[i - k][j - k];
+						if (i - k >= 0)				 G += str[i - k][j];
+						if (i - k >= 0 && j + k < N) H += str[i - k][j + k];
+					}
+					if (A == S || B == S || C == S || D == S || E == S || F == S || G == S || H == S) {
+						flag = true;
+						break;
+					}
+				}
+				if (flag) break;
+			}
+			cout << i + 1 << " " << j + 1 << endl;
+		}
+		if (T) cout << endl;
+	}
+	return 0;
 }
