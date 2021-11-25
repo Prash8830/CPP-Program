@@ -26,3 +26,5 @@ int main(){
     }
     return 0;
 }
+//Output:
+//I AM FINE TODAY.
