@@ -1,0 +1,122 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Dec 13 14:37:57 2021
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> conn
+Enter user-name: system
+Enter password:
+Connected.
+SQL> desc emp;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ EMP_NO                                             NUMBER(6)
+ EMP_NAME                                           VARCHAR2(15)
+ ADDRESS                                            VARCHAR2(15)
+ SALARY                                             NUMBER(6)
+
+SQL> desc salary;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ EMP_NO                                             NUMBER(6)
+ SALARY                                             NUMBER(6)
+
+SQL> insert into emp values (&emp_no,'&emp_name','&address',&salary);
+Enter value for emp_no: 1
+Enter value for emp_name: mayur
+Enter value for address: jalgaon
+Enter value for salary: 20000
+old   1: insert into emp values (&emp_no,'&emp_name','&address',&salary)
+new   1: insert into emp values (1,'mayur','jalgaon',20000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_no: 2
+Enter value for emp_name: darshan
+Enter value for address: shirpur
+Enter value for salary: 10000
+old   1: insert into emp values (&emp_no,'&emp_name','&address',&salary)
+new   1: insert into emp values (2,'darshan','shirpur',10000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_no: 3
+Enter value for emp_name: prathmesh
+Enter value for address: songir
+Enter value for salary: 25000
+old   1: insert into emp values (&emp_no,'&emp_name','&address',&salary)
+new   1: insert into emp values (3,'prathmesh','songir',25000)
+
+1 row created.
+
+SQL> select * from emp;
+
+    EMP_NO EMP_NAME        ADDRESS             SALARY
+---------- --------------- --------------- ----------
+         1 mayur           jalgaon              20000
+         2 darshan         shirpur              10000
+         3 prathmesh       songir               25000
+
+SQL> insert into salary values (&emp_no,&salary);
+Enter value for emp_no: 1
+Enter value for salary: 50000
+old   1: insert into salary values (&emp_no,&salary)
+new   1: insert into salary values (1,50000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_no: 3
+Enter value for salary: 80000
+old   1: insert into salary values (&emp_no,&salary)
+new   1: insert into salary values (3,80000)
+
+1 row created.
+
+SQL> /
+Enter value for emp_no: 2
+Enter value for salary: 5000
+old   1: insert into salary values (&emp_no,&salary)
+new   1: insert into salary values (2,5000)
+
+1 row created.
+
+SQL> select * from emp;
+
+    EMP_NO EMP_NAME        ADDRESS             SALARY
+---------- --------------- --------------- ----------
+         1 mayur           jalgaon              20000
+         2 darshan         shirpur              10000
+         3 prathmesh       songir               25000
+
+SQL> execute salarychange;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from emp;
+
+    EMP_NO EMP_NAME        ADDRESS             SALARY
+---------- --------------- --------------- ----------
+         1 mayur           jalgaon              50000
+         2 darshan         shirpur               5000
+         3 prathmesh       songir               80000
+
+SQL>
