@@ -1,0 +1,203 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Dec 20 13:14:42 2021
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> conn
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> conn
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> conn
+Enter user-name: system
+Enter password:
+Connected.
+SQL> create table employe(
+  2  emp_id number(6),
+  3  emp_name varchar(15),
+  4  emp_city varchar(20));
+
+Table created.
+
+SQL> create table assigned_to(
+  2  emp_id number(6),
+  3  p_id number(6),
+  4  p_name varchar(15));
+
+Table created.
+
+SQL> insert into employee values (&emp_id,'&emp_name',
+  2  '&emp_city');
+Enter value for emp_id: 101
+Enter value for emp_name: Prashant
+old   1: insert into employee values (&emp_id,'&emp_name',
+new   1: insert into employee values (101,'Prashant',
+Enter value for emp_city: Nandurbar
+old   2: '&emp_city')
+new   2: 'Nandurbar')
+insert into employee values (101,'Prashant',
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> insert into employe values (&emp_id,'&emp_name','&emp_city');
+Enter value for emp_id: 101
+Enter value for emp_name: Prashant
+Enter value for emp_city: Nandurbar
+old   1: insert into employe values (&emp_id,'&emp_name','&emp_city')
+new   1: insert into employe values (101,'Prashant','Nandurbar')
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: 102
+Enter value for emp_name: Darshan
+Enter value for emp_city: Shirpur
+old   1: insert into employe values (&emp_id,'&emp_name','&emp_city')
+new   1: insert into employe values (102,'Darshan','Shirpur')
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: 103
+Enter value for emp_name: Mayur
+Enter value for emp_city: Jalgoan
+old   1: insert into employe values (&emp_id,'&emp_name','&emp_city')
+new   1: insert into employe values (103,'Mayur','Jalgoan')
+
+1 row created.
+
+SQL> 104
+SP2-0226: Invalid line number
+SQL> Prathmesh
+SP2-0042: unknown command "Prathmesh" - rest of line ignored.
+SQL> /
+Enter value for emp_id: 104
+Enter value for emp_name: Prathmesh
+Enter value for emp_city: Songir
+old   1: insert into employe values (&emp_id,'&emp_name','&emp_city')
+new   1: insert into employe values (104,'Prathmesh','Songir')
+
+1 row created.
+
+SQL> select * employe;
+select * employe
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from employe;
+
+    EMP_ID EMP_NAME        EMP_CITY
+---------- --------------- --------------------
+       101 Prashant        Nandurbar
+       102 Darshan         Shirpur
+       103 Mayur           Jalgoan
+       104 Prathmesh       Songir
+
+SQL> insert into assigned_to values (&emp_id,&p_id,'&p_name');
+Enter value for emp_id: 101
+Enter value for p_id: 10
+Enter value for p_name: OS
+old   1: insert into assigned_to values (&emp_id,&p_id,'&p_name')
+new   1: insert into assigned_to values (101,10,'OS')
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: 102
+Enter value for p_id: 12
+Enter value for p_name: DSA
+old   1: insert into assigned_to values (&emp_id,&p_id,'&p_name')
+new   1: insert into assigned_to values (102,12,'DSA')
+
+1 row created.
+
+SQL> /
+Enter value for emp_id: 103
+Enter value for p_id: 46
+Enter value for p_name: CNN
+old   1: insert into assigned_to values (&emp_id,&p_id,'&p_name')
+new   1: insert into assigned_to values (103,46,'CNN')
+
+1 row created.
+
+SQL> select * from assigned_to;
+
+    EMP_ID       P_ID P_NAME
+---------- ---------- ---------------
+       101         10 OS
+       102         12 DSA
+       103         46 CNN
+
+SQL> select * from employe natural inner join assigned_to;
+
+    EMP_ID EMP_NAME        EMP_CITY                   P_ID P_NAME
+---------- --------------- -------------------- ---------- ---------------
+       101 Prashant        Nandurbar                    10 OS
+       102 Darshan         Shirpur                      12 DSA
+       103 Mayur           Jalgoan                      46 CNN
+
+SQL> select * from employe left outer join assigned_to on employe.emp_id=assigne
+d_to.emp_id;
+
+    EMP_ID EMP_NAME        EMP_CITY                 EMP_ID       P_ID
+---------- --------------- -------------------- ---------- ----------
+P_NAME
+---------------
+       101 Prashant        Nandurbar                   101         10
+OS
+
+       102 Darshan         Shirpur                     102         12
+DSA
+
+       103 Mayur           Jalgoan                     103         46
+CNN
+
+
+    EMP_ID EMP_NAME        EMP_CITY                 EMP_ID       P_ID
+---------- --------------- -------------------- ---------- ----------
+P_NAME
+---------------
+       104 Prathmesh       Songir
+
+
+
+SQL> select * from employe right outer join assigned_to on employe.emp_id=assign
+ed_to.emp_id;
+
+    EMP_ID EMP_NAME        EMP_CITY                 EMP_ID       P_ID
+---------- --------------- -------------------- ---------- ----------
+P_NAME
+---------------
+       101 Prashant        Nandurbar                   101         10
+OS
+
+       102 Darshan         Shirpur                     102         12
+DSA
+
+       103 Mayur           Jalgoan                     103         46
+CNN
+
+
+SQL> select * from employe full outer join assigned_to using (emp_id);
+
+    EMP_ID EMP_NAME        EMP_CITY                   P_ID P_NAME
+---------- --------------- -------------------- ---------- ---------------
+       101 Prashant        Nandurbar                    10 OS
+       102 Darshan         Shirpur                      12 DSA
+       103 Mayur           Jalgoan                      46 CNN
+       104 Prathmesh       Songir
+
+SQL>
